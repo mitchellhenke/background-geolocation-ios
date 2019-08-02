@@ -56,8 +56,7 @@ static NSString * const Domain = @"com.marianhello";
     DDLogInfo(@"%@ will start", TAG);
 
     if (!isStarted) {
-        [locationManager stopMonitoringSignificantLocationChanges];
-        isStarted = [locationManager start:outError];
+        isStarted = [locationManager startMonitoringSignificantLocationChanges];
     }
 
     return isStarted;
@@ -72,19 +71,12 @@ static NSString * const Domain = @"com.marianhello";
     }
 
     [locationManager stopMonitoringSignificantLocationChanges];
-    if ([locationManager stop:outError]) {
-        isStarted = NO;
-        return YES;
-    }
 
     return NO;
 }
 
 - (void) onTerminate
 {
-    if (isStarted && !_config.stopOnTerminate) {
-        [locationManager startMonitoringSignificantLocationChanges];
-    }
 }
 
 - (void) onAuthorizationChanged:(MAURLocationAuthorizationStatus)authStatus
@@ -126,4 +118,3 @@ static NSString * const Domain = @"com.marianhello";
 }
 
 @end
-
